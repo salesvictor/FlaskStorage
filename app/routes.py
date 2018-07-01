@@ -1,14 +1,33 @@
 from app import app
-from flask import render_template
+from flask import render_template, request, redirect, url_for, make_response, session
 
 @app.route('/')
 def index():
-  return render_template('index.html')
+  if not 'username' in session or not request.cookies.get('username'):
+    return render_template('index.html')
 
-@app.route('/cookies')
+  return redirect(url_for('store'))
+
+@app.route('/cookies', methods=['GET', 'POST'])
 def cookies():
-  return 'cookies'
+  if request.method == 'POST':
+    username = request.form.get('username')
 
-@app.route('/sessions')
+    response = make_response(redirect(url_for('store')))
+    response.set_cookie('username', username)
+
+    return response
+
+  return render_template('form.html')
+
+@app.route('/sessions', methods=['GET', 'POST'])
 def sessions():
-  return 'sessions'
+  if request.method == 'POST':
+    session['username'] = request.form.get('username')
+    return redirect(url_for('store'))
+
+  return render_template('form.html')
+
+@app.route('/store')
+def store():
+  return 'store'
