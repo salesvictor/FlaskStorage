@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h3>Select a file to download</h3>
+  <ul>
+    {% for file in files %}
+      <li><a href="{{ url_for('download', filename=file) }}">{{ file }}</a></li>
+    {% endfor %}
+  </ul>
+  <br>
+  <a href="{{ url_for('home') }}" class="button">Home</a>
+{% endblock %}

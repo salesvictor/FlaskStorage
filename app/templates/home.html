@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h3>Howdy, {{ username }}</h3>
+  <p>What do you want to do?</p>
+  <br>
+  <a href="{{ url_for('logout') }}" class="button">Logout</a>
+  <a href="{{ url_for('view_files') }}" class="button">View Stored Files</a>
+  <a href="{{ url_for('upload_files') }}" class="button">Upload a File</a>
+{% endblock %}
